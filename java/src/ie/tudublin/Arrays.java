@@ -114,10 +114,10 @@ public class Arrays extends PApplet
 		for(int i = 0 ; i < months.length ;  i ++)
 		{
 			// Map X Values
-			float x = map1(i, 0, months.length, 50, (width - 100));
-			float y  = map1(i, 0, rainfall.length, rainfall[i], 0);
+			float x = map1(i, 0, months.length, 50, (width - 50));
+			float y = map1(-rainfall[i], 0, -500, 0, -height + 100);
 			stroke(0);
-			rect(x, y, w, -rainfall[i]);
+			rect(x, height - 50, w, y);
 		}
 	}
 }
