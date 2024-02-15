@@ -95,13 +95,29 @@ public class Arrays extends PApplet
 	
 	public void draw()
 	{	
+		// Space = 3x, 12x = Months  500 / 15 = 33.33
 
+		
 		background(0);
-		float w = width / (float)months.length;
+		stroke(255, 255, 255);
+
+		// Y Axis - 50 is 1.5 x 33.33
+		line(50, 50, 50, 450);
+		// X Axis
+		line(50, 450, 450, 450);
+
+		// Graph Title
+		text("Rainfall Bar Chart", 200, 25);
+
+		// There Are 2 50px Spaces On Either Side.
+		float w = (width - 100) / (float)months.length;
 		for(int i = 0 ; i < months.length ;  i ++)
 		{
-			float x = map1(i, 0, months.length, 0, width);
-			rect(x, height, w, -rainfall[i]);
+			// Map X Values
+			float x = map1(i, 0, months.length, 50, (width - 100));
+			float y  = map1(i, 0, rainfall.length, rainfall[i], 0);
+			stroke(0);
+			rect(x, y, w, -rainfall[i]);
 		}
 	}
 }

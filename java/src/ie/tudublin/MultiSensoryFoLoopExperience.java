@@ -125,6 +125,13 @@ public class MultiSensoryFoLoopExperience extends PApplet {
 					py = y;
 				}
 
+				break;
+
+				case 5:
+				{
+					line(66, 66, 66, 732);
+					break;
+				}
 				// map(a,b,c,d,e);
 				// a = inputvalue
 				// b - c - start and end of the first range
