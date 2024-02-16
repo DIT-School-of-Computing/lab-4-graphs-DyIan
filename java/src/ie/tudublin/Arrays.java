@@ -114,6 +114,7 @@ public class Arrays extends PApplet
 		float Max_Y = 0;
 		int Max_Ind = FindMax();
 		int Bottom = height - 50;
+		int Colour = 0;
 
 		for(int i = 0 ; i < months.length ;  i ++)
 		{
@@ -122,16 +123,19 @@ public class Arrays extends PApplet
 			float y = map1(rainfall[i], 0, rainfall[Max_Ind], 50, height - 50);
 			stroke(0);
 			rect(x, Bottom, w, -y + 50);
-
-			// Y's Are Negative Cause Of Graph Orientation.
-			if (y < Max_Y)
+			fill(Colour, 255, 255);
+			Colour += 360 / months.length;
+			
+			if (y > Max_Y)
 			{
 				Max_Y = y;
 			}
 
 		}
 
+		
 		stroke(255, 255, 255);
+		//fill(0, 0, 255);
 		// Y Axis - 50 is 1.5 x 33.33
 		line(50, 50, 50, 450);
 		// X Axis
@@ -143,7 +147,7 @@ public class Arrays extends PApplet
 
 		for (int i = 0; i < Num_Axis_Values; i++)
 		{
-			text((int)-offset * i , 20, (height - 50) - i * h);	
+			text((int)offset * i , 20, (height - 50) - i * h);	
 		}
 
 	}
