@@ -12,7 +12,6 @@ public class Arrays extends PApplet
 
 	// For Bar Chart
 	int Num_Axis_Values = 12;
-
 	int maxIndex = 0;
 
 	public float map1(float a, float b, float c, float d, float e)
@@ -22,6 +21,19 @@ public class Arrays extends PApplet
 
 		float howFar = a - b;
 		return d + (howFar / r1) * r2;
+	}
+
+	public int FindMax()
+	{
+	
+		for(int i= 0 ; i < rainfall.length ; i ++)
+		{
+			if (rainfall[i] > rainfall[maxIndex])
+			{
+				maxIndex = i;
+			}
+		}
+		return maxIndex;
 	}
 
 	void randomize()
@@ -55,13 +67,6 @@ public class Arrays extends PApplet
 			}
 		}
 		
-		for(int i= 0 ; i < rainfall.length ; i ++)
-		{
-			if (rainfall[i] > rainfall[maxIndex])
-			{
-				maxIndex = i;
-			}
-		}
 
 		println("The month with the minimum rainfall was " + months[minIndex] + " with " + rainfall[minIndex] + "rain");
 		println("The month with the max rainfall was " + months[maxIndex] + " with " + rainfall[maxIndex] + "rain");
@@ -85,15 +90,12 @@ public class Arrays extends PApplet
 		println(map1(26, 25, 35, 0, 100));
 		// 10 
 
-
 	}
 
 	public void setup() {
 		colorMode(HSB);
 		background(0);
 		randomize();
-		
-		
 	}
 
 	
@@ -110,14 +112,16 @@ public class Arrays extends PApplet
 		// There Are 2 50px Spaces On Either Side.
 		float w = (width - 100) / (float)months.length;
 		float Max_Y = 0;
+		int Max_Ind = FindMax();
+		int Bottom = height - 50;
 
 		for(int i = 0 ; i < months.length ;  i ++)
 		{
 			// Map X Values
 			float x = map1(i, 0, months.length, 50, (width - 50));
-			float y = map1(rainfall[i], 0, 500, 0, -height + 100);
+			float y = map1(rainfall[i], 0, rainfall[Max_Ind], 50, height - 50);
 			stroke(0);
-			rect(x, height - 50, w, y);
+			rect(x, Bottom, w, -y + 50);
 
 			// Y's Are Negative Cause Of Graph Orientation.
 			if (y < Max_Y)
@@ -137,7 +141,6 @@ public class Arrays extends PApplet
 		float offset = Max_Y / (float)Num_Axis_Values;
 		float h = 450 / Num_Axis_Values;
 
-		print("Max Y is : ", Max_Y);
 		for (int i = 0; i < Num_Axis_Values; i++)
 		{
 			text((int)-offset * i , 20, (height - 50) - i * h);	
