@@ -121,15 +121,19 @@ public class Arrays extends PApplet
 			// Map X Values
 			float x = map1(i, 0, months.length, 50, (width - 50));
 			float y = map1(rainfall[i], 0, rainfall[Max_Ind], 50, height - 50);
+	
+			fill(Colour, 255, 255);
 			stroke(0);
 			rect(x, Bottom, w, -y + 50);
-			fill(Colour, 255, 255);
-			Colour += 360 / months.length;
+			Colour += (20);
 			
 			if (y > Max_Y)
 			{
 				Max_Y = y;
 			}
+
+			// Print Months On X Axis
+			text(months[i], x, 460);
 
 		}
 
@@ -147,6 +151,7 @@ public class Arrays extends PApplet
 
 		for (int i = 0; i < Num_Axis_Values; i++)
 		{
+			// Axis Numbers
 			text((int)offset * i , 20, (height - 50) - i * h);	
 		}
 
