@@ -123,7 +123,8 @@ public class Arrays extends PApplet
 			float y = map1(rainfall[i], 0, rainfall[Max_Ind], 50, height - 50);
 	
 			fill(Colour, 255, 255);
-			stroke(0);
+			strokeWeight(3);
+			stroke(255, 0, 255);
 			rect(x, Bottom, w, -y + 50);
 			Colour += (20);
 			
@@ -138,10 +139,10 @@ public class Arrays extends PApplet
 		}
 
 		
-		stroke(255, 255, 255);
+		stroke(255, 0, 255);
 		//fill(0, 0, 255);
 		// Y Axis - 50 is 1.5 x 33.33
-		line(50, 50, 50, 450);
+		line(50, 44, 50, 450);
 		// X Axis
 		line(50, 450, 450, 450);
 
@@ -152,7 +153,9 @@ public class Arrays extends PApplet
 		for (int i = 0; i < Num_Axis_Values; i++)
 		{
 			// Axis Numbers
+			fill(255, 0, 255);
 			text((int)offset * i , 20, (height - 50) - i * h);	
+			line(50, (height - 50) - i * h, 40, (height - 50) - i * h);
 		}
 
 	}
