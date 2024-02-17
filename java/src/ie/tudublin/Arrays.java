@@ -8,7 +8,7 @@ import processing.core.PApplet;
 
 public class Arrays extends PApplet
 {
-	int mode = 0;
+	int mode = 1;
 	String[] months = {"JAN", "FEB", "MAR", "APR", "MAY", "JUN", "JUL", "AUG", "SEP", "OCT", "NOV", "DEC"};
 
 	float[] rainfall = {200, 260, 300, 150, 100, 50, 10, 40, 67, 160, 400, 420};
@@ -111,79 +111,112 @@ public class Arrays extends PApplet
 	
 	public void draw()
 	{	
+		float w = (width - 100) / (float)months.length;
+		int Max_Ind = FindMax();
+		float Max_Y = rainfall[Max_Ind];
+		int Bottom = height - 50;
+		int Colour = 0;
+
+		// Calculate The Step For Y Axis
+		float offset = ceil(Max_Y / (float)Num_Axis_Values);
+		float h = 450 / (Num_Axis_Values + 1);	// This Is Because 0 Is Included On The Axis
+
 		// Space = 3x, 12x = Months  500 / 15 = 33.33
-		switch (mode) {
+		switch (mode)
+		{
 			case 0:
 			{
 				background(0);
 
-			// Graph Title
-			text("Rainfall Bar Chart", 200, 25);
+				// Graph Title
+				textAlign(CENTER);
+				text("Rainfall Bar Chart", 250, 25);
+
 	
-			// There Are 2 50px Spaces On Either Side.
-			float w = (width - 100) / (float)months.length;
-			float Max_Y = 0;
-			int Max_Ind = FindMax();
-			int Bottom = height - 50;
-			int Colour = 0;
-	
-			for(int i = 0 ; i < months.length ;  i ++)
-			{
-				// Map X Values
-				float x = map1(i, 0, months.length, 50, (width - 50));
-				float y = map1(rainfall[i], 0, rainfall[Max_Ind], 50, height - 50);
-		
-				fill(Colour, 255, 255);
-				strokeWeight(3);
-				stroke(255, 0, 255);
-				rect(x, Bottom, w, -y + 50);
-				Colour += (20);
-				
-				if (rainfall[i] > Max_Y)
+				for(int i = 0 ; i < months.length ;  i ++)
 				{
-					Max_Y = rainfall[i];
-					print("Max Y Changed To :", Max_Y, "\n");
+					// Map X Values
+					float x = map1(i, 0, months.length, 50, Bottom);
+					float y = map1(rainfall[i], 0, Max_Y, 50, Bottom);
+			
+					fill(Colour, 255, 255);
+					strokeWeight(3);
+					stroke(255, 0, 255);
+					rect(x, Bottom, w, -y + 50);
+					Colour += (20);
+				
+					textAlign(LEFT);
+					text(months[i], x, 460);
+		
 				}
 	
-				// Print Months On X Axis
-				text(months[i], x, 460);
-	
-			}
-	
 			
-			stroke(255, 0, 255);
-			//fill(0, 0, 255);
-			// Y Axis - 50 is 1.5 x 33.33
-			line(50, 50, 50, 450);
-			// X Axis
-			line(50, 450, 450, 450);
-	
-			// Calculate How Much We Got To Offset Values By
-			float offset = ceil(Max_Y / (float)Num_Axis_Values);
-			float h = 450 / (Num_Axis_Values + 1);	// This Is Because 0 Is Included On The Axis
-	
-			for (int i = 0; i <= Num_Axis_Values; i++)
-			{
-				// Axis Numbers
-				fill(255, 0, 255);
-				text((int)offset * i , 20, (height - 50) - i * h);	
-				line(50, (height - 50) - i * h, 40, (height - 50) - i * h);
-			}
+				stroke(255, 0, 255);
+				//fill(0, 0, 255);
+				// Y Axis - 50 is 1.5 x 33.33
+				line(50, 50, 50, 450);
+				// X Axis
+				line(50, 450, 450, 450);
+		
+
+				
+				for (int i = 0; i <= Num_Axis_Values; i++)
+				{
+					// Axis Numbers
+					fill(255, 0, 255);
+					text((int)offset * i , 20, Bottom - (i * h));	
+					line(50, Bottom - (i * h), 40, Bottom - (i * h));
+				}
 				break;
 			}
 
 			case 1:
 			{
 				background(0);
-				break;
-			}
-			
+				
+				textAlign(CENTER);
+				text("Rainfall Trend Chart", 250, 25);
 
+
+				stroke(255, 0, 255);
+				line(50, 50, 50, 450);
+				// X Axis
+				line(50, 450, 450, 450);
+
+				// Have To Manually Print Jan, Since We Start At Index 1
+				textAlign(LEFT);
+				text(months[0], 50, 460);
+				for (int i = 1; i < months.length; i++)
+				{
+					float x1 = map1(i - 1, 0, months.length, 50, Bottom);
+					float x2 = map1(i, 0, months.length, 50, Bottom);
+					float y1 = map1(rainfall[i - 1], 0, Max_Y, 50, Bottom);
+					float y2 = map1(rainfall[i], 0, Max_Y, 50, Bottom);
+
+					// Needs To Be Inverted
+					line(x1,(height - y1), x2,(height - y2));
+
+					// Prints Months On X-Axis
+					text(months[i], x2, 460);
+
+				}
+				
+
+				// Axis Stuff
+				for (int i = 0; i <= Num_Axis_Values; i++)
+				{
+					// Axis Numbers
+					fill(255, 0, 255);
+					text((int)offset * i , 20, Bottom - (i * h));	
+					line(50, Bottom - (i * h), 40, Bottom - (i * h));
+				}
+		
+				break;
+			} // End Case 1
+			
 			default:
 				break;
-		}
-		
-		
-		noLoop();	
-	}
-}
+		} // End Switch
+			//noLoop();	
+	}// End Draw
+} // End Class
